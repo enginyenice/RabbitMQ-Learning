@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitMQ.Publisher
@@ -20,14 +21,20 @@ namespace RabbitMQ.Publisher
                 durable:true,
                 exclusive:false,
                 autoDelete:false);
-            string message = "Hello world";
-            //RabbitMQ mesajlar byte dizisi olarak gönderilir.
-            var messageBody = Encoding.UTF8.GetBytes(message);
-            //Bu çalışmada exchange kullanmıyoruz bu yüzden String.Empty gönderdik. Bu işleme default exchange denir.
-            //Default Exchange kullanıyorsak eğer Route keyimize kuyruğumuzun ismini vermemiz gerekiyor.
-            channel.BasicPublish(exchange: String.Empty, routingKey: "hello-queue", basicProperties: null, body: messageBody);
 
-            Console.WriteLine("Mesaj gönderildi");
+            //Mesaj sayısını arttırmak için 50 tane mesaj gönderdik.
+            Enumerable.Range(1, 50).ToList().ForEach(x =>
+            {
+                string message = $"Message: {x}";
+                //RabbitMQ mesajlar byte dizisi olarak gönderilir.
+                var messageBody = Encoding.UTF8.GetBytes(message);
+                //Bu çalışmada exchange kullanmıyoruz bu yüzden String.Empty gönderdik. Bu işleme default exchange denir.
+                //Default Exchange kullanıyorsak eğer Route keyimize kuyruğumuzun ismini vermemiz gerekiyor.
+                channel.BasicPublish(exchange: String.Empty, routingKey: "hello-queue", basicProperties: null, body: messageBody);
+
+                Console.WriteLine($"Mesaj gönderildi. Giden Mesaj: {message}");
+            });
+            
             Console.ReadLine();
         }
     }
