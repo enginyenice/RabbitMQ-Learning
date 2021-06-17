@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Publisher", "RabbitMQ.Publisher\RabbitMQ.Publisher.csproj", "{7F8D5E72-5812-47C0-AE92-9A99243231AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Publisher", "RabbitMQ\Tutorial-One\RabbitMQ.Publisher\RabbitMQ.Publisher.csproj", "{7F8D5E72-5812-47C0-AE92-9A99243231AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Subscriber", "RabbitMQ.Subscriber\RabbitMQ.Subscriber.csproj", "{665D199E-CE6A-4F20-8A0D-3B1A09A594E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Subscriber", "RabbitMQ\Tutorial-One\RabbitMQ.Subscriber\RabbitMQ.Subscriber.csproj", "{665D199E-CE6A-4F20-8A0D-3B1A09A594E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-One", "Tutorial-One", "{5F498883-F84B-42B9-96FA-FD5E85464D13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7F8D5E72-5812-47C0-AE92-9A99243231AB} = {5F498883-F84B-42B9-96FA-FD5E85464D13}
+		{665D199E-CE6A-4F20-8A0D-3B1A09A594E9} = {5F498883-F84B-42B9-96FA-FD5E85464D13}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9E38D22-FBE9-42F7-A1B0-99BF5FF236D8}
