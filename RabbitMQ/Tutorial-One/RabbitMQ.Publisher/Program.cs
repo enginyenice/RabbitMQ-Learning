@@ -5,6 +5,13 @@ using System.Text;
 //Publisher yerine Producer da kullanılır.
 namespace RabbitMQ.Publisher
 {
+    public enum LogNames
+    {
+        Critical = 1,
+        Error = 2,
+        Warning = 3,
+        Info = 4
+    };
     class Program
     {
         static void Main(string[] args)
@@ -15,23 +22,29 @@ namespace RabbitMQ.Publisher
             using var connection = factorcy.CreateConnection();
             //Kanal oluşturuyoruz
             var channel = connection.CreateModel();
-            //exchange: adını istiyor. İsmi logs-fanout olsun. (Farketmez)
-            //durable: kuyruklar fiziksel olarak kaydedilsin mi? (Restart attığında kuyruk silinmez : true) / (Restart attığında kuyruk silinir: false)
-            //type: ExchangeType'ını belirtiyoruz.
-            channel.ExchangeDeclare(exchange: "logs-fanout", durable: true, type: ExchangeType.Fanout);
+
+            channel.ExchangeDeclare(exchange: "logs-direct", durable: true, type: ExchangeType.Direct);
+
+            Enum.GetNames(typeof(LogNames)).ToList().ForEach(x =>
+            {
+                var routeKey = $"route-{x}";
+                var queueName = $"direct-queue-{x}";
+                channel.QueueDeclare(queueName, true, false, false);
+                channel.QueueBind(queueName, "logs-direct",routeKey, null);
+            });
+
 
             //Mesaj sayısını arttırmak için 50 tane mesaj gönderdik.
             Enumerable.Range(1, 50).ToList().ForEach(x =>
             {
-                string message = $"Log: {x}";
-                //RabbitMQ mesajlar byte dizisi olarak gönderilir.
+                LogNames log=  (LogNames)new Random().Next(1, 5);
+                string message = $"Log Type: {log} Log: {x}";
                 var messageBody = Encoding.UTF8.GetBytes(message);
-                //Bu çalışmada exchange kullanmıyoruz bu yüzden String.Empty gönderdik. Bu işleme default exchange denir.
-                //Default Exchange kullanıyorsak eğer Route keyimize kuyruğumuzun ismini vermemiz gerekiyor.
-                //Exchange verdiğimizde Exchane ismini vermemiz gerekiyor. Bu sefer de kuyruk ismini boş göndermemiz gerekiyor.
-                channel.BasicPublish(exchange: "logs-fanout",routingKey:"", basicProperties: null, body: messageBody);
+                var routeKey = $"route-{log}";
 
-                Console.WriteLine($"Mesaj gönderildi. Giden Mesaj: {message}");
+                channel.BasicPublish("logs-direct",routeKey,null,messageBody);
+
+                Console.WriteLine($"Log gönderildi. Giden Log: {message}");
             });
             
             Console.ReadLine();
