@@ -18,14 +18,21 @@ namespace RabbitMQ.Subscriber
             using var connection = factorcy.CreateConnection();
             //Kanal oluşturuyoruz
             var channel = connection.CreateModel();
-            // Kuyruk oluşturuyoruz. Eğer oluşturmazsak publisher böyle bir kuyruk oluşturmadığı durumda hata
-            // mesajı alırız.
-            //Hem publisher hemde subscriber tarafında oluşturuyorsak eğer parametrelerin aynı olduğundan emin olmalıyız.
-            channel.QueueDeclare(
-                queue: "hello-queue",
-                durable: true,
-                exclusive: false,
-                autoDelete: false);
+
+            //exchange: adını istiyor. İsmi logs-fanout olsun. (Farketmez)
+            //durable: kuyruklar fiziksel olarak kaydedilsin mi? (Restart attığında kuyruk silinmez : true) / (Restart attığında kuyruk silinir: false)
+            //type: ExchangeType'ını belirtiyoruz.
+            //subscriber tarafında bunu aynı ayarlarla oluşturmaya gerek yok. Oluştursakda hata almayız.
+            //channel.ExchangeDeclare(exchange: "logs-fanout", durable: true, type: ExchangeType.Fanout);
+
+            //Random kuyruk ismi oluşturduk. Elle de oluşturabilirdik ama kütüphane zaten oluşturduğu için 
+            //onu kullandık
+            var randomQueueName = channel.QueueDeclare().QueueName;
+
+
+            //QueueBind => Uygulama ayağa kalktığında kuyruk oluşacak. Uygulama down olduğunda kuyruk silinecek.
+            channel.QueueBind(queue: randomQueueName, exchange: "logs-fanout",routingKey:String.Empty,arguments:null);
+
 
             //prefetchSize: Hangi boyuttaki mesajlar gelsin 0 (herhangi bir boyutta ki mesajlar gelebilir) 
             //prefetchCount: Her bir subscriber kaç kaç mesaj gelsin 
@@ -34,10 +41,13 @@ namespace RabbitMQ.Subscriber
             //true yaparsak: Her bir subscriber varsa toplam değeri 5 olacak şekilde ayarlar. Paydaş dağıtır. Örnek: prefetchCount:5 kabul edersek.
             channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
             var subscriber = new EventingBasicConsumer(model: channel);
+
+            Console.WriteLine("Loglar dinleniyor...");
+
             //autoAck : true yapılırsa mesaj doğruda işlense yanlış da işelense kuyruktan siler
             //autoAck : false yapılırsa mesaj kuyruktan silinmez.
             channel.BasicConsume(
-                queue: "hello-queue",
+                queue: randomQueueName,
                 autoAck: false,
                 consumer: subscriber);
             //Received : rabbitmq bir mesaj gönderdiğinde bu event tetiklenir

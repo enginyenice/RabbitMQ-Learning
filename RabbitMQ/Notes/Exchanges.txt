@@ -1,0 +1,4 @@
+Fanout Exchange: Kendisine bağlı olan tüm kuyruklara aynı mesajı gönderir.
+		Örnek:	Saat başı hava tahmini yapmak istiyorsunuz, bir publisher var bu publisher saat başı hava durumu bilgisi alıyor.
+			Alınan bilgileri Fanout Exchange gönderiyor. Bu kişiler birer kuyruk oluşturdu ve bu kuyruktan mesajları aldılar.
+

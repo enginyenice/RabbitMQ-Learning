@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Text;
-
+//Publisher yerine Producer da kullanılır.
 namespace RabbitMQ.Publisher
 {
     class Program
@@ -15,22 +15,21 @@ namespace RabbitMQ.Publisher
             using var connection = factorcy.CreateConnection();
             //Kanal oluşturuyoruz
             var channel = connection.CreateModel();
-            // Kuyruk oluşturuyoruz. Yoksa mesajlar boşa gider.
-            channel.QueueDeclare(
-                queue:"hello-queue",
-                durable:true,
-                exclusive:false,
-                autoDelete:false);
+            //exchange: adını istiyor. İsmi logs-fanout olsun. (Farketmez)
+            //durable: kuyruklar fiziksel olarak kaydedilsin mi? (Restart attığında kuyruk silinmez : true) / (Restart attığında kuyruk silinir: false)
+            //type: ExchangeType'ını belirtiyoruz.
+            channel.ExchangeDeclare(exchange: "logs-fanout", durable: true, type: ExchangeType.Fanout);
 
             //Mesaj sayısını arttırmak için 50 tane mesaj gönderdik.
             Enumerable.Range(1, 50).ToList().ForEach(x =>
             {
-                string message = $"Message: {x}";
+                string message = $"Log: {x}";
                 //RabbitMQ mesajlar byte dizisi olarak gönderilir.
                 var messageBody = Encoding.UTF8.GetBytes(message);
                 //Bu çalışmada exchange kullanmıyoruz bu yüzden String.Empty gönderdik. Bu işleme default exchange denir.
                 //Default Exchange kullanıyorsak eğer Route keyimize kuyruğumuzun ismini vermemiz gerekiyor.
-                channel.BasicPublish(exchange: String.Empty, routingKey: "hello-queue", basicProperties: null, body: messageBody);
+                //Exchange verdiğimizde Exchane ismini vermemiz gerekiyor. Bu sefer de kuyruk ismini boş göndermemiz gerekiyor.
+                channel.BasicPublish(exchange: "logs-fanout",routingKey:"", basicProperties: null, body: messageBody);
 
                 Console.WriteLine($"Mesaj gönderildi. Giden Mesaj: {message}");
             });
