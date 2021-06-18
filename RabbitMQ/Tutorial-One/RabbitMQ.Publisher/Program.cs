@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 //Publisher yerine Producer da kullanılır.
@@ -23,23 +24,19 @@ namespace RabbitMQ.Publisher
             //Kanal oluşturuyoruz
             var channel = connection.CreateModel();
 
-            channel.ExchangeDeclare("logs-topic", durable: true, type: ExchangeType.Topic);
+            channel.ExchangeDeclare("header-exchange", durable: true, type: ExchangeType.Headers);
+            //Header belirliyoruz. value kısmına istediğin herşeyi gömebilirsin
+            Dictionary<string, object> headers = new Dictionary<string, object>();
+            headers.Add("format", "pdf");
+            headers.Add("shape", "a4");
 
-            Random rnd = new Random();
-            Enumerable.Range(1, 50).ToList().ForEach(x =>
-            {
-                LogNames log1 = (LogNames)rnd.Next(1, 5);
-                LogNames log2 = (LogNames)rnd.Next(1, 5);
-                LogNames log3 = (LogNames)rnd.Next(1, 5);
-                var routeKey = $"{log1}.{log2}.{log3}";
-                string message = $"Log Type: {log1} -- {log2} -- {log3}";
-                var messageBody = Encoding.UTF8.GetBytes(message);
-
-                channel.BasicPublish("logs-topic",routeKey,null,messageBody);
-
-                Console.WriteLine($"Log gönderildi. Giden Log: {message}");
-            });
-            
+            //channel üzerinden bir properties oluşturuyoruz.
+            var properties = channel.CreateBasicProperties();
+            //oluşturduğumuz properties in headersına kendi headers ımızı gömüyoruz.
+            properties.Headers = headers;
+            //basicProperties içerisine oluşturduğumuz properties ekliyoruz.
+            channel.BasicPublish("header-exchange", String.Empty, basicProperties: properties, Encoding.UTF8.GetBytes("Header mesajım"));
+            Console.WriteLine("Mesaj gönderildi.");
             Console.ReadLine();
         }
     }

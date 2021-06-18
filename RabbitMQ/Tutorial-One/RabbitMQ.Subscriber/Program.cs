@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -23,10 +24,13 @@ namespace RabbitMQ.Subscriber
 
             
             var queueName = channel.QueueDeclare().QueueName;
-            //var routeKey = "*.Error.*"; // Sadece ortasında route olan başı ve sonu önemli değil. Bu kuyruğa gelsin.
-            //var routeKey = "*.*.Warning"; //Sonu Warning olanlar bu kuyruğa gelsin
-            var routeKey = "Info.#";//Başı Info olsun sonunda ne geldiği önemli değil.
-            channel.QueueBind(queueName, "logs-topic", routeKey);
+            Dictionary<string, object> headers = new Dictionary<string, object>();
+            headers.Add("format", "pdf");
+            headers.Add("shape", "a4");
+            headers.Add("x-match", "all");//All dersem tüm key value çiftleri eşleşmeli
+            //headers.Add("x-match", "any");//Any dersem bir tane key value çifti eşleşmesi yeterlidir.
+            channel.ExchangeDeclare("header-exchange", durable: true, type: ExchangeType.Headers); // Yoksa exchange oluşsun (hata vermemesi için)
+            channel.QueueBind(queueName, "header-exchange",String.Empty,headers);
             channel.BasicConsume(queueName,false,subscriber);
 
             Console.WriteLine("Loglar dinleniyor...");
@@ -39,7 +43,6 @@ namespace RabbitMQ.Subscriber
                 Thread.Sleep(1000);
 
                 Console.WriteLine($"Gelen mesaj : {message}");
-                //File.AppendAllText("log-critical.txt", message+ "\n"); //Txt çıktı için örnek kod
                 channel.BasicAck(e.DeliveryTag,false);
 
 

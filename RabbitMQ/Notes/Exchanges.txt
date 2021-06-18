@@ -1,5 +1,10 @@
+---------------------------------
+| Engin Yenice                  |
+| enginyenice2626@gmail.com     |
+---------------------------------
+
 Fanout Exchange: Kendisine bağlı olan tüm kuyruklara aynı mesajı gönderir.
-		Kuyruğu Subscriber tarafından oluşturulmalıdır. Subscriber down olduğu zamanda kuyruk silinir.
+		 Kuyruğu Subscriber tarafından oluşturulmalıdır. Subscriber down olduğu zamanda kuyruk silinir.
 
 Direct Exchange: Kendisine gelen mesajı route bilgisine göre uygun kuyruğa gönderiyor.
 
@@ -16,3 +21,67 @@ Topic Exchange: Daha detaylı route yapısına sahip bir Exchange
 		           //var routeKey = "*.Error.*"; // Sadece ortasında route olan başı ve sonu önemli değil. Bu kuyruğa gelsin.
 		           //var routeKey = "*.*.Warning"; //Sonu Warning olanlar bu kuyruğa gelsin
 		           //var routeKey = "Info.#";//Başı Info olsun sonunda ne geldiği önemli değil.
+
+Header Exchange:Routlama özelliği diğerlerinden farklı gerçekleşiyor.
+		Routlama ile ilgili bilgileri ilgili mesajın route ında değil headerında key,value şeklinde gönderiyoruz.
+			Örnek: header => format=pdf shape=a4 
+		header belirtirken (x-match parametresinde any) dersek key value çiftlerinden 1 tanesi aynı olması yeterli
+		header belirtirken (x-match parametresinde all) dersek key value çiftlerinin hepsinin uyması gerekmektedir.
+		Örnek Dictionaryler:
+			Publisher tarafı
+				Dictionary<string, object> headers = new Dictionary<string, object>();
+				headers.Add("format", "pdf");
+			        headers.Add("shape", "a4");
+			Subscriber tarafı
+			            Dictionary<string, object> headers = new Dictionary<string, object>();
+			            headers.Add("format", "pdf");
+			            headers.Add("shape", "a4");
+			            headers.Add("x-match", "all");//All dersem tüm key value çiftleri eşleşmeli
+			            //headers.Add("x-match", "any");//Any dersem bir tane key value çifti eşleşmesi yeterlidir.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
