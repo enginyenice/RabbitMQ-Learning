@@ -3,3 +3,16 @@ Fanout Exchange: Kendisine bağlı olan tüm kuyruklara aynı mesajı gönderir.
 
 Direct Exchange: Kendisine gelen mesajı route bilgisine göre uygun kuyruğa gönderiyor.
 
+
+Topic Exchange: Daha detaylı route yapısına sahip bir Exchange
+		Çok detaylı bir routlama yapacağımız zaman kullanacağımız bir Exchange tipi
+		Route keyimizde noktalarla birlikte bir key belirliyoruz. Örn: Critical.Error.Warning şeklinde bir key
+		Burada varyasyon çok fazla olduğu için burada kuyruk oluşturma işlemini subscriber lara bırakıyoruz.
+		*.Error.* => Ortasında Error olan tüm varyasyonları ben kuyruğuma gelsin
+		#.Error => Sonunda .Error olanlar benim kuyruğuma gelsin
+		* Tek bir karaktere karşılık geliyorken
+		# Birden fazla karaktere karşılık geliyor.
+		Örnek Route Keyler
+		           //var routeKey = "*.Error.*"; // Sadece ortasında route olan başı ve sonu önemli değil. Bu kuyruğa gelsin.
+		           //var routeKey = "*.*.Warning"; //Sonu Warning olanlar bu kuyruğa gelsin
+		           //var routeKey = "Info.#";//Başı Info olsun sonunda ne geldiği önemli değil.

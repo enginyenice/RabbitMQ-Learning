@@ -15,33 +15,35 @@ namespace RabbitMQ.Subscriber
         {
             var factorcy = new ConnectionFactory();
             factorcy.Uri = new Uri("amqps://gnhvkhqr:rrUuNbVKXKmpfcdYgb6Ua8WpnPTFZh3Z@snake.rmq2.cloudamqp.com/gnhvkhqr");
-            //Bağlantı oluşturuyoruz
             using var connection = factorcy.CreateConnection();
-            //Kanal oluşturuyoruz
             var channel = connection.CreateModel();
 
+            channel.BasicQos(0,1,false);
+            var subscriber = new EventingBasicConsumer(channel);
 
-            channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
-            var subscriber = new EventingBasicConsumer(model: channel);
+            
+            var queueName = channel.QueueDeclare().QueueName;
+            //var routeKey = "*.Error.*"; // Sadece ortasında route olan başı ve sonu önemli değil. Bu kuyruğa gelsin.
+            //var routeKey = "*.*.Warning"; //Sonu Warning olanlar bu kuyruğa gelsin
+            var routeKey = "Info.#";//Başı Info olsun sonunda ne geldiği önemli değil.
+            channel.QueueBind(queueName, "logs-topic", routeKey);
+            channel.BasicConsume(queueName,false,subscriber);
 
             Console.WriteLine("Loglar dinleniyor...");
-            var queueName = "direct-queue-Critical";
-            channel.BasicConsume(
-                queue: queueName,
-                autoAck: false,
-                consumer: subscriber);
-            //Received : rabbitmq bir mesaj gönderdiğinde bu event tetiklenir
             subscriber.Received += (object sender, BasicDeliverEventArgs e) =>
             {
+                
                 //Gelen mesajı string formatına çevirdik.
                 var message = Encoding.UTF8.GetString(e.Body.ToArray());
-                Console.WriteLine($"Gelen mesaj : {message}");
-                //File.AppendAllText("log-critical.txt", message+ "\n");
-                channel.BasicAck(deliveryTag: e.DeliveryTag,multiple:false);
-
-
                 //Mesajlar çok hızlı geldiği için threadi 1 saniyelik uyutalım. Görsel amaçlı.
                 Thread.Sleep(1000);
+
+                Console.WriteLine($"Gelen mesaj : {message}");
+                //File.AppendAllText("log-critical.txt", message+ "\n"); //Txt çıktı için örnek kod
+                channel.BasicAck(e.DeliveryTag,false);
+
+
+                
             };
 
             Console.ReadLine();
