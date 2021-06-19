@@ -1,9 +1,11 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 
 
@@ -39,10 +41,11 @@ namespace RabbitMQ.Subscriber
                 
                 //Gelen mesajı string formatına çevirdik.
                 var message = Encoding.UTF8.GetString(e.Body.ToArray());
+                var product = JsonSerializer.Deserialize<Product>(message);
                 //Mesajlar çok hızlı geldiği için threadi 1 saniyelik uyutalım. Görsel amaçlı.
                 Thread.Sleep(1000);
 
-                Console.WriteLine($"Gelen mesaj : {message}");
+                Console.WriteLine($"Gelen mesaj : {product.Id} - {product.Name} - {product.Price} - {product.Stock}");
                 channel.BasicAck(e.DeliveryTag,false);
 
 

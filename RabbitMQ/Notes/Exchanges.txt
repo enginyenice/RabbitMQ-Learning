@@ -45,6 +45,9 @@ Exchange (durable=true): Veriler fiziksel belleğe kayıt edilir. Kuyruğu kalı
 			            //Mesalar kalıcı hale gelmiş olur
 			            properties.Persistent = true;
 
+Complex typle'ları 
+mesaj olarak göndermek: Byte dizisi olarak çevirip gönderebiliriz.
+
 
 
 
