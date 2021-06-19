@@ -30,7 +30,7 @@ namespace RabbitMQ.WaterMarkWeb
         {
             //appsettings.json dosyasından rabbitmq bağlantı cümlemizi aldık ve singleton olarak oluşturduk.
             //Buradan 1 adet esne örneği oluşturulacak
-            services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")) });
+            services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")),DispatchConsumersAsync=true });
             //Buradan 1 adet esne örneği oluşturulacak
             services.AddSingleton<RabbitMQClientService>();
             //Buradan 1 adet esne örneği oluşturulacak

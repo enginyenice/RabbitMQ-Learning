@@ -57,6 +57,10 @@ Mesaj(Message): İşlenmesi için gerekli veriyi taşır. Mesajı gönderen mesa
 Event: 		İşlenecek data bulunmaz. Event'ler bir notification sistemi sağlar. Event'i fırlatan onun nasıl ele alınacağını bilmez.
 		Genellikle isimler verilirken geçmiş zaman kullanılır.
 		Genelde küçük hacimli datalar taşır. Mesela kullanıcı id
+
+DI Yaparken:    Asenkron olarak kullanılıyorsa methodlar o zaman DI yaptığımız yerde DispatchConsumersAsync = true yaparak haberdar etmemiz gerekiyor.
+			Örnek:
+			services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")),DispatchConsumersAsync=true });
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 

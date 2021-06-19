@@ -46,6 +46,9 @@ namespace RabbitMQ.WaterMarkWeb.BackgroundServices
 
         private Task Consumer_Received(object sender, BasicDeliverEventArgs @event)
         {
+            //Çok hızlı gerçekleşiyor görmek için yavaşlattık.
+            Task.Delay(5000).Wait();
+
             try
             {
                 //Gelen mesajı aldık
@@ -58,7 +61,7 @@ namespace RabbitMQ.WaterMarkWeb.BackgroundServices
                 //Grafik oluşturduk
                 using var graphic = Graphics.FromImage(img);
 
-                var font = new Font(FontFamily.GenericSansSerif, 32, FontStyle.Bold, GraphicsUnit.Pixel);
+                var font = new Font(FontFamily.GenericSansSerif, 40, FontStyle.Bold, GraphicsUnit.Pixel);
 
                 var text = "enginyenice.com";
                 //Yazılacak yazının boyutunu alacağız.
@@ -74,10 +77,10 @@ namespace RabbitMQ.WaterMarkWeb.BackgroundServices
                 graphic.Dispose();
                 _channel.BasicAck(@event.DeliveryTag,false);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                _logger.LogError(ex.Message);
             }
             return Task.CompletedTask;
         }
