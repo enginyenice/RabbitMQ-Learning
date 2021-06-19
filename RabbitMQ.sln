@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-One", "Tutorial-On
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "RabbitMQ\Tutorial-One\Shared\Shared.csproj", "{F6E4D11B-8454-4ED4-AEDD-0F08AE519069}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-Two", "Tutorial-Two", "{58E14221-EC55-4030-B96F-EDE9BCA157CC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-Two", "RabbitMQ\Tutorial-Two", "{58E14221-EC55-4030-B96F-EDE9BCA157CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.WaterMarkWeb", "Tutorial-Two\RabbitMQ.WaterMarkWeb\RabbitMQ.WaterMarkWeb.csproj", "{02A2342B-9319-4B9B-A9AC-2AA7DCF533CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.WaterMarkWeb", "RabbitMQ\Tutorial-Two\RabbitMQ.WaterMarkWeb\RabbitMQ.WaterMarkWeb.csproj", "{02A2342B-9319-4B9B-A9AC-2AA7DCF533CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
