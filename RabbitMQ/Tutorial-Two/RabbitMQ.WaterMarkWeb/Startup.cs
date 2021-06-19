@@ -32,6 +32,8 @@ namespace RabbitMQ.WaterMarkWeb
             services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")) });
             //Buradan 1 adet esne örneği oluşturulacak
             services.AddSingleton<RabbitMQClientService>();
+            //Buradan 1 adet esne örneği oluşturulacak
+            services.AddSingleton<RabbitMQPublisher>();
 
             //InMemory Database kurduk.
             services.AddDbContext<AppDbContext>(options => {

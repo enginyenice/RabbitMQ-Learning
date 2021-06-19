@@ -48,7 +48,15 @@ Exchange (durable=true): Veriler fiziksel belleğe kayıt edilir. Kuyruğu kalı
 Complex typle'ları 
 mesaj olarak göndermek: Byte dizisi olarak çevirip gönderebiliriz.
 
+RabbitMQ mesajlar 2 tipe ayrılıyor.
 
+Mesaj(Message): İşlenmesi için gerekli veriyi taşır. Mesajı gönderen mesajın nasıl işleneceğini bilir.
+		İsimlendirme emir kipi ile kullanılır.
+		Genelde büyük hacimli datalar taşınır. Mesela Resim veya Pdf gibi
+
+Event: 		İşlenecek data bulunmaz. Event'ler bir notification sistemi sağlar. Event'i fırlatan onun nasıl ele alınacağını bilmez.
+		Genellikle isimler verilirken geçmiş zaman kullanılır.
+		Genelde küçük hacimli datalar taşır. Mesela kullanıcı id
 --------------------------------------------------------------------------------------------------------------------------------------------
 
 
