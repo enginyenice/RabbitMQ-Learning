@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ.Subscriber", "Rabb
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-One", "Tutorial-One", "{5F498883-F84B-42B9-96FA-FD5E85464D13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "RabbitMQ\Tutorial-One\Shared\Shared.csproj", "{F6E4D11B-8454-4ED4-AEDD-0F08AE519069}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "RabbitMQ\Shared\Shared.csproj", "{F6E4D11B-8454-4ED4-AEDD-0F08AE519069}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-Two", "Tutorial-Two", "{58E14221-EC55-4030-B96F-EDE9BCA157CC}"
 EndProject
