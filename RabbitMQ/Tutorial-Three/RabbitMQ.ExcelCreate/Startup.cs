@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
 using RabbitMQ.ExcelCreate.Models;
+using RabbitMQ.ExcelCreate.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +28,13 @@ namespace RabbitMQ.ExcelCreate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
+            //appsettings.json dosyasından rabbitmq bağlantı cümlemizi aldık ve singleton olarak oluşturduk.
+            //Buradan 1 adet esne örneği oluşturulacak
+            services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")), DispatchConsumersAsync = true });
+            //Buradan 1 adet esne örneği oluşturulacak
+            services.AddSingleton<RabbitMQClientService>();
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
