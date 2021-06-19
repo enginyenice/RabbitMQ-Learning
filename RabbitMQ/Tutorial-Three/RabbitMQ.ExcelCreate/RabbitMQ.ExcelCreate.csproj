@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\Tutorial-One\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

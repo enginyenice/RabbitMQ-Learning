@@ -66,6 +66,8 @@ DI Yaparken:    Asenkron olarak kullanılıyorsa methodlar o zaman DI yaptığı
 Tutorial-Two    => Event Örneği
 Tutorial-Three  => Message Örneği
 
+WorkerService içerisinde DI Container Logging ve Backgorund Service vardır.
+
 
 
 
