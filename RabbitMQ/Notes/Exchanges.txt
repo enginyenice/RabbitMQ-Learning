@@ -39,6 +39,11 @@ Header Exchange:Routlama özelliği diğerlerinden farklı gerçekleşiyor.
 			            headers.Add("x-match", "all");//All dersem tüm key value çiftleri eşleşmeli
 			            //headers.Add("x-match", "any");//Any dersem bir tane key value çifti eşleşmesi yeterlidir.
 
+Exchange (durable=true): Veriler fiziksel belleğe kayıt edilir. Kuyruğu kalıcı yapsakta mesajlar kalıcı hale gelmiyor. Bunun için
+			Oluşturduğunuz propertieslerden .Persistent özelliğini true yapmamız gerekiyor.
+			Örnek:
+			            //Mesalar kalıcı hale gelmiş olur
+			            properties.Persistent = true;
 
 
 
