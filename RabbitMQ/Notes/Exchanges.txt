@@ -63,7 +63,8 @@ DI Yaparken:    Asenkron olarak kullanılıyorsa methodlar o zaman DI yaptığı
 			services.AddSingleton(sp => new ConnectionFactory() { Uri = new Uri(Configuration.GetConnectionString("RabbitMQ")),DispatchConsumersAsync=true });
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-
+Tutorial-Two    => Event Örneği
+Tutorial-Three  => Message Örneği
 
 
 
