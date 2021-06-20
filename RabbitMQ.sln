@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorial-Four", "Tutorial-F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Word_To_Pdf_Producer", "RabbitMQ\Tutorial-Four\RabbitMQ.Word_To_Pdf_Producer\RabbitMQ.Word_To_Pdf_Producer.csproj", "{8F2BFA4B-568F-4ADA-9DC8-676806E5A526}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQ.Word_To_Pdf.Consumer", "RabbitMQ\Tutorial-Four\RabbitMQ.Word_To_Pdf.Consumer\RabbitMQ.Word_To_Pdf.Consumer.csproj", "{8E78CF32-1FC1-4835-B094-E313EB36CE43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{8F2BFA4B-568F-4ADA-9DC8-676806E5A526}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F2BFA4B-568F-4ADA-9DC8-676806E5A526}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F2BFA4B-568F-4ADA-9DC8-676806E5A526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E78CF32-1FC1-4835-B094-E313EB36CE43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E78CF32-1FC1-4835-B094-E313EB36CE43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E78CF32-1FC1-4835-B094-E313EB36CE43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E78CF32-1FC1-4835-B094-E313EB36CE43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{08D2C5AE-DB74-4D66-A16E-80BD33366145} = {D9081C72-50B0-41D0-8919-471F509FA07A}
 		{762399A9-774B-4780-9577-BFF8C79BA396} = {D9081C72-50B0-41D0-8919-471F509FA07A}
 		{8F2BFA4B-568F-4ADA-9DC8-676806E5A526} = {E4EBD6A4-647F-4080-BFF6-2BB574122116}
+		{8E78CF32-1FC1-4835-B094-E313EB36CE43} = {E4EBD6A4-647F-4080-BFF6-2BB574122116}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9E38D22-FBE9-42F7-A1B0-99BF5FF236D8}
