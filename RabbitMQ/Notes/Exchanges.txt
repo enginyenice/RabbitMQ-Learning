@@ -67,6 +67,7 @@ Tutorial-Two    => Event Örneği
 Tutorial-Three  => Message Örneği
 
 WorkerService içerisinde DI Container Logging ve Backgorund Service vardır.
+Database First: https://www.entityframeworktutorial.net/efcore/create-model-for-existing-database-in-ef-core.aspx
 
 
 
