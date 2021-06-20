@@ -16,14 +16,32 @@
     </thead>
     <tbody>
          @foreach (var item in Model)
-	{
+         {
 		 <tr>
              <td>@item.FileName</td>
              <td>@item.GetCreatedDate</td>
              <td>@item.FileStatus</td>
              <td><a href="~/files/@item.FilePath" class="btn btn-primary @(item.FileStatus == FileStatus.Creating ? "disabled" : "")" >Download</a></td>
          </tr>
-	}
+         }
     </tbody>
 </table>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        var hasStartCreatingExcel = '@TempData["StartCreatingExcel"]';
+        if (hasStartCreatingExcel) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'info',
+                title: 'Excel oluşturma işlemi başlamıştır. Bittiğinde bildiri alacaksınız.',
+                showConfirmButton: false,
+                timer:2500  
+            })
+        }
+
+    })
+</script>
+}
 
